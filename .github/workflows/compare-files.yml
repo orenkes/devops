@@ -6,64 +6,56 @@ on:
 
 jobs:
   compare-with-variable:
-    name: Job 1 - Compare file with repo variable
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Compare file with repository variable
+      - name: Compare file with repo variable
         env:
           REPO_VAR: ${{ vars.MY_REPO_VAR }}
         run: |
-          FILE_VALUE=$(cat file_with_var.txt)
+          FILE_VALUE=$(cat data.txt)
 
           if [ "$FILE_VALUE" != "$REPO_VAR" ]; then
-            echo "❌ File value does not match repository variable"
+            echo "❌ data.txt does not match repository variable"
             exit 1
           fi
 
-          echo "✅ File matches repository variable"
+          echo "✅ data.txt matches repository variable"
 
   compare-with-secret:
-    name: Job 2 - Compare file with secret
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Compare file with secret
         env:
           SECRET_VALUE: ${{ secrets.MY_SECRET }}
         run: |
-          FILE_VALUE=$(cat file_with_secret.txt)
+          FILE_VALUE=$(cat data.txt)
 
           if [ "$FILE_VALUE" != "$SECRET_VALUE" ]; then
-            echo "❌ File value does not match secret"
+            echo "❌ data.txt does not match secret"
             exit 1
           fi
 
-          echo "✅ File matches secret"
+          echo "✅ data.txt matches secret"
 
   success-job:
-    name: Job 3 - Run only if Job 1 and 2 succeed
     runs-on: ubuntu-latest
     needs:
       - compare-with-variable
       - compare-with-secret
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Print file and variable values (NO secret)
+      - name: Confirm success (no secret printed)
         env:
           REPO_VAR: ${{ vars.MY_REPO_VAR }}
         run: |
           echo "📄 File value:"
-          cat file_with_var.txt
+          cat data.txt
 
           echo ""
           echo "🔧 Repository variable value:"
