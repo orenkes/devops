@@ -17,6 +17,7 @@ jobs:
           FILE_VALUE=$(cat data.txt)
 
           if [ "$FILE_VALUE" != "$REPO_VAR" ]; then
+            echo "FILE_VALUE: $FILE_VALUE"
             echo "❌ data.txt does not match repository variable"
             exit 1
           fi
