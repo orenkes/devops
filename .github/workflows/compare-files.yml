@@ -18,6 +18,7 @@ jobs:
 
           if [ "$FILE_VALUE" != "${{ vars.DATA }}" ]; then
             echo "FILE_VALUE: $FILE_VALUE"
+            echo "DATA: ${{ vars.DATA }}"
             echo "❌ data.txt does not match repository variable"
             exit 1
           fi
@@ -36,6 +37,8 @@ jobs:
           FILE_VALUE=$(cat data.txt)
 
           if [ "$FILE_VALUE" != "$SECRET_VALUE" ]; then
+            echo "FILE_VALUE: $FILE_VALUE"
+            echo "SECRET_VALUE: $SECRET_VALUE"
             echo "❌ data.txt does not match secret"
             exit 1
           fi
