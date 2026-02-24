@@ -20,9 +20,6 @@ jobs:
         with:
           python-version: '3.9'
 
-      - name: Install dependencies
-        pip install -r troubleshooting/01-github-actions/requirements.txt
-
       - name: finish
         run: |
           echo "Amazing!"
